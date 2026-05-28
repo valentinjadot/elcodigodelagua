@@ -1,31 +1,34 @@
 import { P5CanvasInstance, Sketch } from '@p5-wrapper/react';
-import P5 from 'p5';
+import { MediaElement, Element } from 'p5';
+
+// Create the global variables: playing, video, and button.
+let playing: boolean = false;
+let video: MediaElement;
+let button: Element;
 
 export const mySketch: Sketch = (p5: P5CanvasInstance) => {
-  const logoWidth = 250;
-  const logoHeight = 114;
-
-  let logo: P5.Image;
-
-  const drawImage = () => {
-    p5.image(
-      logo,
-      p5.windowWidth / 2 - logoWidth / 2,
-      p5.windowHeight / 2 - logoHeight / 2
-    );
-  };
-
-  p5.preload = () => (logo = p5.loadImage('/assets/p5js.svg'));
-
   p5.setup = () => {
-    p5.createCanvas(p5.windowWidth, p5.windowHeight);
-    drawImage();
+    // Use the noCanvas() function to remove the canvas.
+    const body = document.body;
+    body.style.backgroundColor = 'black';
+    p5.noCanvas();
+
+    video = p5.createVideo(['/assets/video.mp4']);
+    video.volume(0);
+    video.size(p5.windowWidth, p5.windowHeight);
+    button = p5.createButton('play');
+    button.position(
+      p5.windowWidth / 2 - button.width / 2,
+      p5.windowHeight / 2 - button.height / 2,
+    );
+    button.mousePressed(startVideo);
   };
 
-  p5.draw = () => {};
+  function startVideo() {
+    if (playing) return;
 
-  p5.windowResized = () => {
-    p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
-    drawImage();
-  };
+    video.loop();
+    button.style('display', 'none');
+    playing = true;
+  }
 };
