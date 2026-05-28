@@ -4,8 +4,8 @@ import { Bit, decypherMorse } from '../lib/morse';
 
 const PIXEL_COMPONENTS = 4;
 const SAMPLE = 8;
-const FADE_FRAMES = 60;
-const BRIGHTNESS_THRESHOLD = 200;
+const FADE_FRAMES = 100;
+const BRIGHTNESS_THRESHOLD = 180;
 
 let video: MediaElement;
 let pg: Graphics;
