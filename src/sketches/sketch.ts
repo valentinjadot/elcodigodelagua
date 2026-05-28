@@ -74,15 +74,23 @@ export const sketch: Sketch = (p5: P5CanvasInstance) => {
     if (decodeStarted) return;
     decodeStarted = true;
     centerButton.html('Descifrando Morse...');
+    centerButton.style('cursor', 'default');
     centerButton.show();
     p5.noLoop();
 
     requestAnimationFrame(() => {
       centerButton.hide();
-      textOverlay.textContent = videoBits
-        .map(decypherMorse)
+      const morseStrings = videoBits
+        .map((frameBits) => decypherMorse(frameBits).morseString)
         .filter(Boolean)
         .join(FRAME_SEPARATOR);
+
+      const humanStrings = videoBits
+        .map((frameBits) => decypherMorse(frameBits).humanString)
+        .filter(Boolean)
+        .join(FRAME_SEPARATOR);
+
+      textOverlay.innerHTML = `${morseStrings}<br /><br /><br /><br />${humanStrings}`;
       textOverlay.hidden = false;
     });
   };

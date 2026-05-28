@@ -92,13 +92,16 @@ export function morseStringToHumanString(morseString: MorseString): string {
     .join(' ');
 }
 
-export function decypherMorse(bits: Bit[]): string {
+export function decypherMorse(bits: Bit[]): {
+  morseString: string;
+  humanString: string;
+} {
   const bitSequences = createBitSequences(bits);
   const morsePrimitives = mapSequencesToMorsePrimitives(bitSequences);
   const morseString = morsePrimitivesToMorseString(morsePrimitives);
   const humanString = morseStringToHumanString(morseString);
   console.log(humanString);
-  return humanString;
+  return { morseString, humanString };
 }
 
 function createBitSequences(bits: Bit[]): BitSequence[] {
