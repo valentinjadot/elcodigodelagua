@@ -2,19 +2,24 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-color: #fff;
+  background-color: #000;
 }
 
 canvas {
   vertical-align: top;
 }
 
-.start-button {
+.button {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
   padding: 12px 24px;
   font-size: 22px;
   cursor: pointer;
-  background-color: #000;
   color: #fff;
+  background-color: transparent;
   border: none;
 }
 
@@ -27,10 +32,9 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000;
   z-index: 1000;
   box-sizing: border-box;
-  padding: 50px;
+  padding: 24px;
 }
 
 .text-overlay {
@@ -38,8 +42,8 @@ canvas {
   width: 100%;
   height: 100%;
   color: #fff;
-  font-size: 14px;
-  line-height: 1;
+  font-size: 12px;
+  line-height: 1.2;
   font-family: monospace;
   padding: 16px;
 }

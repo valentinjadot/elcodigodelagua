@@ -10,9 +10,10 @@ const FRAME_SEPARATOR = ' ---------- ';
 
 let video: MediaElement;
 let pg: Graphics;
-let startButton: ReturnType<P5CanvasInstance['createButton']>;
+let centerButton: ReturnType<P5CanvasInstance['createButton']>;
 let started = false;
-let textShown = false;
+let videoFinished = false;
+let decodeStarted = false;
 
 const textOverlay = document.getElementById('text-overlay')!;
 
@@ -38,17 +39,24 @@ export const mySketch: Sketch = (p5: P5CanvasInstance) => {
     if (started) return;
     started = true;
     video.play();
-    startButton.hide();
+    centerButton.hide();
     p5.loop();
   };
 
-  const showDecypheredText = () => {
-    textOverlay.textContent = videoBits
-      .map(decypherMorse)
-      .join(FRAME_SEPARATOR);
-    textOverlay.hidden = false;
-    textShown = true;
+  const handleVideoEnd = () => {
+    if (decodeStarted) return;
+    decodeStarted = true;
+    centerButton.html('Descifrando Morse...');
+    centerButton.show();
     p5.noLoop();
+
+    requestAnimationFrame(() => {
+      centerButton.hide();
+      textOverlay.textContent = videoBits
+        .map(decypherMorse)
+        .join(FRAME_SEPARATOR);
+      textOverlay.hidden = false;
+    });
   };
 
   const drawVideo = (offsetX: number, offsetY: number, scale: number) => {
@@ -100,23 +108,26 @@ export const mySketch: Sketch = (p5: P5CanvasInstance) => {
     video.volume(0);
     video.hide();
     video.pause();
+    video.elt.loop = false;
+    video.elt.onended = () => {
+      videoFinished = true;
+    };
     video.elt.onloadedmetadata = () => {
       pg = p5.createGraphics(video.width, video.height);
       pg.pixelDensity(1);
     };
 
-    startButton = p5.createButton('Start');
-    startButton.addClass('start-button');
-    startButton.position(p5.width / 2 - 40, p5.height / 2 - 20);
-    startButton.mousePressed(start);
+    centerButton = p5.createButton('Iniciar');
+    centerButton.addClass('button');
+    centerButton.mousePressed(start);
   };
 
   p5.draw = () => {
     p5.background(0);
     if (!started || !pg) return;
 
-    if (video.elt.paused) {
-      if (!textShown) showDecypheredText();
+    if (videoFinished || video.elt.ended) {
+      handleVideoEnd();
       return;
     }
 
