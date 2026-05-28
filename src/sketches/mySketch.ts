@@ -16,7 +16,7 @@ let humanText: string = '';
 
 const allSampledPixels: Bit[] = [];
 
-const getBrightness = (pixels: Uint8ClampedArray, i: number) =>
+const getBrightness = (pixels: number[], i: number) =>
   (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
 
 const getPixelIndex = (x: number, y: number, width: number) =>
