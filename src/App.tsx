@@ -1,10 +1,10 @@
 import { ReactP5Wrapper } from '@p5-wrapper/react';
-import { mySketch } from './sketches/mySketch';
+import { sketch } from './sketches/sketch';
 
 function App() {
   return (
     <>
-      <ReactP5Wrapper sketch={mySketch} />
+      <ReactP5Wrapper sketch={sketch} />
     </>
   );
 }
