@@ -8,7 +8,8 @@ const PIXEL_COMPONENTS = 4;
 const SAMPLE = 1;
 const FADE_FRAMES = 100;
 const BRIGHTNESS_THRESHOLD = 180;
-const FRAME_SEPARATOR = ' ---------- ';
+const FRAME_SEPARATOR_ONE = ' ---------- ';
+const FRAME_SEPARATOR_TWO = ' <br /><br /><br /> ';
 
 let video: MediaElement;
 let pg: Graphics;
@@ -82,15 +83,13 @@ export const sketch: Sketch = (p5: P5CanvasInstance) => {
       centerButton.hide();
       const morseStrings = videoBits
         .map((frameBits) => decypherMorse(frameBits).morseString)
-        .filter(Boolean)
-        .join(FRAME_SEPARATOR);
+        .filter(Boolean);
 
       const humanStrings = videoBits
         .map((frameBits) => decypherMorse(frameBits).humanString)
-        .filter(Boolean)
-        .join(FRAME_SEPARATOR);
+        .filter(Boolean);
 
-      textOverlay.innerHTML = `${morseStrings}<br /><br /><br /><br />${humanStrings}`;
+      textOverlay.innerHTML = `${morseStrings.join(FRAME_SEPARATOR_ONE)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_ONE)}<br /><br /><br /><br /><br /><br /><br /><br />${morseStrings.join(FRAME_SEPARATOR_TWO)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_TWO)}`;
       textOverlay.hidden = false;
     });
   };
