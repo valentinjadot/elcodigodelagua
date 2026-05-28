@@ -12,6 +12,8 @@ let video: MediaElement;
 let pg: Graphics;
 let centerButton: ReturnType<P5CanvasInstance['createButton']>;
 let started = false;
+let canCapture = false;
+let lastCapturedFrame = -1;
 let videoFinished = false;
 let decodeStarted = false;
 
@@ -38,8 +40,11 @@ export const mySketch: Sketch = (p5: P5CanvasInstance) => {
   const start = () => {
     if (started) return;
     started = true;
-    video.play();
     centerButton.hide();
+    video.elt.onplaying = () => {
+      canCapture = true;
+    };
+    video.play();
     p5.loop();
   };
 
@@ -54,6 +59,7 @@ export const mySketch: Sketch = (p5: P5CanvasInstance) => {
       centerButton.hide();
       textOverlay.textContent = videoBits
         .map(decypherMorse)
+        .filter(Boolean)
         .join(FRAME_SEPARATOR);
       textOverlay.hidden = false;
     });
@@ -138,6 +144,13 @@ export const mySketch: Sketch = (p5: P5CanvasInstance) => {
     pg.loadPixels();
     drawVideo(offsetX, offsetY, scale);
     drawShapes(offsetX, offsetY, scale, frameBits);
+
+    if (!canCapture) return;
+
+    const frameIndex = Math.round(video.time() * p5.frameRate());
+    if (frameIndex === lastCapturedFrame) return;
+
+    lastCapturedFrame = frameIndex;
     videoBits.push(frameBits);
   };
 };
