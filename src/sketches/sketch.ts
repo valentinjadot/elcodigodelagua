@@ -89,7 +89,8 @@ export const sketch: Sketch = (p5: P5CanvasInstance) => {
         .map((frameBits) => decypherMorse(frameBits).humanString)
         .filter(Boolean);
 
-      textOverlay.innerHTML = `${morseStrings.join(FRAME_SEPARATOR_ONE)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_ONE)}<br /><br /><br /><br /><br /><br /><br /><br />${morseStrings.join(FRAME_SEPARATOR_TWO)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_TWO)}`;
+      // textOverlay.innerHTML = `${morseStrings.join(FRAME_SEPARATOR_ONE)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_ONE)}<br /><br /><br /><br /><br /><br /><br /><br />${morseStrings.join(FRAME_SEPARATOR_TWO)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_TWO)}`;
+      textOverlay.innerHTML = `${morseStrings.join(FRAME_SEPARATOR_TWO)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_TWO)}`;
       textOverlay.hidden = false;
     });
   };
