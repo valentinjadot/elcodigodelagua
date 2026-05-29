@@ -1,6 +1,7 @@
 import { P5CanvasInstance, Sketch } from '@p5-wrapper/react';
 import { Graphics, MediaElement } from 'p5';
 import { Bit, decypherMorse } from '../lib/morse';
+import Typo from 'typo-js';
 
 const VIDEO_SRC = '/assets/video1.mp4';
 
@@ -89,8 +90,33 @@ export const sketch: Sketch = (p5: P5CanvasInstance) => {
         .map((frameBits) => decypherMorse(frameBits).humanString)
         .filter(Boolean);
 
-      // textOverlay.innerHTML = `${morseStrings.join(FRAME_SEPARATOR_ONE)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_ONE)}<br /><br /><br /><br /><br /><br /><br /><br />${morseStrings.join(FRAME_SEPARATOR_TWO)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_TWO)}`;
-      textOverlay.innerHTML = `${morseStrings.join(FRAME_SEPARATOR_TWO)}<br /><br /><br /><br />${humanStrings.join(FRAME_SEPARATOR_TWO)}`;
+      const dictionary = new Typo('index', false, false, {
+        dictionaryPath: '/assets/dict',
+      });
+
+      const foundWords = humanStrings
+        .map((string) =>
+          string
+            .split(' ')
+            .filter((word) => word.length >= 3)
+            .filter((word) => dictionary.check(word)),
+        )
+        .flat()
+        .filter(Boolean);
+
+      const text = [
+        `PALABRAS ENCONTRADAS:<br/><br/>
+        ${foundWords.join(' ')}`,
+
+        `MORSE:<br/><br/>
+        ${morseStrings.join(FRAME_SEPARATOR_TWO)}
+        `,
+
+        `TRADUCCIÓN:<br/><br/>
+        ${humanStrings.join(FRAME_SEPARATOR_TWO)}`,
+      ].join('<br /><br /><br /><br />');
+
+      textOverlay.innerHTML = text;
       textOverlay.hidden = false;
     });
   };

@@ -26,6 +26,9 @@ importers:
       tone:
         specifier: ^15.1.22
         version: 15.1.22
+      typo-js:
+        specifier: ^1.3.2
+        version: 1.3.2
     devDependencies:
       '@types/p5':
         specifier: 1.7.6
@@ -1134,6 +1137,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  typo-js@1.3.2:
+    resolution: {integrity: sha512-Z1YkJ7IIYNrFeOxAlHUercY4Q2I+PhYD/3VkWpJGy/Oqudy3bFpNcQxnv6Oa9fTSXCHPGz1eDoX1bZYm2Z891A==}
+
   update-browserslist-db@1.2.3:
     resolution: {integrity: sha512-Js0m9cx+qOgDxo0eMiFGEueWztz+d4+M3rGlmKPT+T4IS/jP4ylw3Nwpu6cpTTP8R1MAC1kF4VbdLt3ARf209w==}
     hasBin: true
@@ -2225,6 +2231,8 @@ snapshots:
   type-fest@0.20.2: {}
 
   typescript@5.9.3: {}
+
+  typo-js@1.3.2: {}
 
   update-browserslist-db@1.2.3(browserslist@4.28.2):
     dependencies:

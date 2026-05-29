@@ -100,7 +100,7 @@ export function decypherMorse(bits: Bit[]): {
   const morsePrimitives = mapSequencesToMorsePrimitives(bitSequences);
   const morseString = morsePrimitivesToMorseString(morsePrimitives);
   const humanString = morseStringToHumanString(morseString);
-  console.log(humanString);
+
   return { morseString, humanString };
 }
 
