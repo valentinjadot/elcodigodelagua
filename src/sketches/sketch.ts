@@ -9,7 +9,6 @@ const PIXEL_COMPONENTS = 4;
 const SAMPLE = 1;
 const FADE_FRAMES = 100;
 const BRIGHTNESS_THRESHOLD = 180;
-const FRAME_SEPARATOR_ONE = ' ---------- ';
 const FRAME_SEPARATOR_TWO = ' <br /><br /><br /> ';
 
 let video: MediaElement;
