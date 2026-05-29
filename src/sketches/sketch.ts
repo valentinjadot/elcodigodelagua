@@ -3,6 +3,7 @@ import { Graphics, MediaElement } from 'p5';
 import { Bit, decypherMorse } from '../lib/morse';
 import Typo from 'typo-js';
 
+const DICT_PATH = '/dict';
 const VIDEO_SRC = '/assets/video1.mp4';
 
 const PIXEL_COMPONENTS = 4;
@@ -89,16 +90,25 @@ export const sketch: Sketch = (p5: P5CanvasInstance) => {
         .map((frameBits) => decypherMorse(frameBits).humanString)
         .filter(Boolean);
 
-      const dictionary = new Typo('index', false, false, {
-        dictionaryPath: '/assets/dict',
+      const spanishDictionary = new Typo('es-AR', false, false, {
+        dictionaryPath: DICT_PATH,
       });
+      // const englishDictionary = new Typo('en-GB', false, false, {
+      //   dictionaryPath: DICT_PATH,
+      // });
+      // const frenchDictionary = new Typo('fr', false, false, {
+      //   dictionaryPath: DICT_PATH,
+      // });
+      const isKnownWord = (word: string) => spanishDictionary.check(word);
+      // || englishDictionary.check(word) ||
+      // frenchDictionary.check(word);
 
       const foundWords = humanStrings
         .map((string) =>
           string
             .split(' ')
             .filter((word) => word.length >= 3)
-            .filter((word) => dictionary.check(word)),
+            .filter((word) => isKnownWord(word)),
         )
         .flat()
         .filter(Boolean);
